@@ -1,0 +1,26 @@
+@import '../../../styles/variables';
+
+.Search {
+  display: flex;
+  position: relative;
+
+  &__input {
+    font-size: $font-size-xs;
+    &:focus {
+      border: 1px solid $secondary-color;
+    }
+  }
+
+  &__btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 0;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    width: 50px !important;
+    border-color: $secondary-color;
+    background-color: $secondary-color;
+  }
+}

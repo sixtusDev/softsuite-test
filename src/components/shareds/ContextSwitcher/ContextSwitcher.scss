@@ -1,0 +1,45 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.ContextSwitcher {
+  cursor: pointer;
+
+  &__menu {
+    display: flex;
+    align-items: center;
+  }
+
+  &__text-block {
+    display: flex;
+    flex-direction: column;
+    color: $primary-color;
+    margin-left: 12px;
+  }
+
+  &__label {
+    @include font-style($font-weight-medium, $font-size-sm, $line-height-base);
+    margin-bottom: -5px;
+  }
+
+  &__current-context {
+    @include font-style($font-weight-bold, $font-size-md, $line-height-base);
+  }
+
+  &__options {
+    margin-left: 50px;
+    margin-top: -10px;
+    margin-bottom: 30px;
+  }
+
+  &__option-block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+  }
+
+  &__option-item {
+    @include font-style($font-weight-light, $font-size-xs, $line-height-base);
+    color: $primary-color-tint-40;
+    margin-left: 5px;
+  }
+}

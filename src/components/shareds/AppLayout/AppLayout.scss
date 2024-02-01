@@ -1,0 +1,44 @@
+@import '../../../styles/variables';
+
+.AppLayout {
+  max-height: 100vh !important;
+
+  .AppLayout__header {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    background: $white;
+    padding: 20px 30px;
+    height: fit-content;
+  }
+
+  .AppLayout__menu {
+    height: 100%;
+    border-radius: 0;
+
+    .ant-menu-title-content {
+      margin-left: 20px;
+    }
+
+    .ant-menu-submenu-selected > .ant-menu-submenu-title {
+      color: #818da9;
+    }
+  }
+
+  .AppLayout__content {
+    padding: 24px;
+    margin: 0;
+  }
+
+  .AppLayout__footer {
+    background-color: $primary-color;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 58px;
+    color: $white;
+  }
+}
