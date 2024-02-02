@@ -17,6 +17,18 @@
   }
 }
 
+.more-options-action {
+  font-size: $font-size-xxs;
+  color: $primary-color;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.danger {
+  color: $red;
+}
+
 .main-heading {
   @include font-style($font-weight-bold, $font-size-xl, $line-height-sub);
   color: $primary-color;

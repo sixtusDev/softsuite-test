@@ -2,6 +2,11 @@ import { SerializedError, createAsyncThunk, createSlice } from '@reduxjs/toolkit
 import request, { ERequestStatus } from '../../common/request';
 import type { RootState } from '..';
 
+export enum Status {
+  Active = 'active',
+  InActive = 'inactive',
+}
+
 export type Element = {
   id: string;
   name: string;
@@ -15,7 +20,7 @@ export type Element = {
   categoryValueId: number;
   reportingName: string;
   processingType: string;
-  status: string;
+  status: Status;
   prorate: string;
   effectiveStartDate: string;
   effectiveEndDate: string;
