@@ -1,0 +1,28 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.Status {
+  padding: 6px 8px;
+  border-radius: 40px;
+
+  &__text {
+    @include font-style($font-weight-medium, $font-size-xxs, $line-height-base);
+    text-align: center;
+  }
+
+  &__text--active {
+    color: $secondary-color;
+  }
+
+  &__text--inactive {
+    color: $red;
+  }
+}
+
+.Status--active {
+  background-color: lighten($secondary-color, 45%);
+}
+
+.Status--inactive {
+  background-color: lighten($red, 37.5%);
+}
