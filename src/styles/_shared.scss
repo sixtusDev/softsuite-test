@@ -1,3 +1,6 @@
+@import './variables';
+@import './mixins';
+
 .ToolBar {
   display: flex;
   background-color: #f4f6f8;
@@ -12,4 +15,17 @@
   &__right {
     display: flex;
   }
+}
+
+.main-heading {
+  @include font-style($font-weight-bold, $font-size-xl, $line-height-sub);
+  color: $primary-color;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
 }
