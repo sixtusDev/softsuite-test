@@ -31,6 +31,7 @@ export type Element = {
 
 export type ElementState = {
   elements: Element[];
+  element?: Element;
   total: number;
   status: ERequestStatus;
   error: SerializedError | null;
@@ -47,6 +48,15 @@ export const fetchElements = createAsyncThunk('element/fetchElements', async () 
   const response = await request.get<{ data: { content: Element[]; total: number } }>('elements');
   return response;
 });
+
+export const fetchElementById = createAsyncThunk(
+  '/element/fetchElementById',
+  async (id: string) => {
+    const response = await request.get<{ data: Element }>(`elements/${id}`);
+    console.log({ response });
+    return response;
+  },
+);
 
 export const elementSlice = createSlice({
   name: 'element',
@@ -69,6 +79,20 @@ export const elementSlice = createSlice({
         const state = _state;
         state.error = action.error;
         state.status = ERequestStatus.FAILED;
+      })
+      .addCase(fetchElementById.pending, (_state) => {
+        const state = _state;
+        state.status = ERequestStatus.LOADING;
+      })
+      .addCase(fetchElementById.fulfilled, (_state, action) => {
+        const state = _state;
+        state.status = ERequestStatus.SUCCEEDED;
+        state.element = action.payload.data;
+      })
+      .addCase(fetchElementById.rejected, (_state, action) => {
+        const state = _state;
+        state.status = ERequestStatus.FAILED;
+        state.error = action.error;
       });
   },
 });
@@ -76,5 +100,7 @@ export const elementSlice = createSlice({
 export const selectElementsState = ({
   elements: { status, elements, error, total },
 }: RootState) => ({ elements, status, error, total });
+export const selectElement = ({ elements: { element } }: RootState) => element;
+export const selectAsyncState = ({ elements: { error, status } }: RootState) => ({ status, error });
 
 export default elementSlice.reducer;

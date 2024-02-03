@@ -23,6 +23,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
 }
 
 .danger {
@@ -40,4 +41,45 @@
 
 .mb-30 {
   margin-bottom: 30px;
+}
+
+.details-container {
+  display: flex;
+  justify-content: space-between;
+  // padding: 16px;
+  // gap: 16px;
+  // border: 1px solid $light-grey-100;
+}
+
+.details-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border: 1px solid $light-grey-100;
+
+  &:last-child {
+    border-left: none;
+  }
+}
+
+.details-item {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  border-bottom: 1px solid $light-grey-100;
+  padding: 8px 24px;
+  height: 52.5px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.details-label {
+  @include font-style($font-weight-medium, 11px, $line-height-base);
+  font-weight: bold;
+}
+
+.details-value {
+  @include font-style($font-weight-medium, $font-size-sm, $line-height-base);
 }

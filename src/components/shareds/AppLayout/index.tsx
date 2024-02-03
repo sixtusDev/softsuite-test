@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
 
@@ -19,7 +20,7 @@ import { Search } from '../Search';
 const { Header, Content, Sider } = Layout;
 
 type AppLayoutProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const AppLayout = ({ children }: AppLayoutProps) => {
@@ -145,6 +146,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             }}
           >
             {children}
+            <Outlet />
           </Content>
           <Footer className="AppLayout__footer" ref={footerRef}>
             <p>©{new Date().getFullYear()} SoftSuite. All rights reserved.</p>

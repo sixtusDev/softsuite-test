@@ -1,11 +1,12 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { TableProps } from 'antd';
+import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectElementsState, fetchElements } from '../../../store/slices/element.slice';
+
+import { useAppSelector } from '../../../store/hooks';
+import { selectElementsState, Element, fetchElements } from '../../../store/slices/element.slice';
 import { withAsyncState } from '../../../hoc/withAsyncState';
 import { EmptyContent } from '../../../components/shareds/EmptyContent';
-import { ERequestStatus } from '../../../common/request';
 import { Table } from '../../../components/shareds/Table';
 import { Status } from '../../../components/shareds/Status';
 import { MoreOptions } from '../../../components/shareds/MoreOptions';
@@ -25,15 +26,15 @@ const elementTableColumns: TableProps<Element>['columns'] = [
   {
     title: 'Action',
     key: '7',
-    render: () => (
+    render: (_, element) => (
       <MoreOptions
         items={[
           {
             key: uuid(),
             label: (
-              <div className="more-options-action">
+              <Link to={`/elements/${element.id}`} className="more-options-action">
                 <ViewIcon /> <span>View Element Links</span>
-              </div>
+              </Link>
             ),
           },
           {
@@ -61,14 +62,7 @@ const elementTableColumns: TableProps<Element>['columns'] = [
 ];
 
 const ElementsTable = () => {
-  const dispatch = useAppDispatch();
-  const { elements, total, status } = useAppSelector(selectElementsState);
-
-  useEffect(() => {
-    if (status === ERequestStatus.IDLE) {
-      dispatch(fetchElements());
-    }
-  }, [dispatch]);
+  const { elements, total } = useAppSelector(selectElementsState);
 
   const reformedElements = useMemo(
     () => elements.map((el) => ({ ...el, status: <Status value={el.status} /> })),
@@ -95,4 +89,8 @@ const ElementsTable = () => {
   );
 };
 
-export const ElementsTableWithAsyncState = withAsyncState(ElementsTable, selectElementsState);
+export const ElementsTableWithAsyncState = withAsyncState(
+  ElementsTable,
+  fetchElements,
+  selectElementsState,
+);

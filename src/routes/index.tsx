@@ -7,6 +7,7 @@ import AppLayout from '../components/shareds/AppLayout';
 
 const About = lazy(() => import('./About'));
 const Elements = lazy(() => import('./Elements'));
+const ElementDetails = lazy(() => import('./Element'));
 
 const Router: FunctionComponent = () => (
   <Routes>
@@ -19,16 +20,24 @@ const Router: FunctionComponent = () => (
         </Suspense>
       }
     />
-    <Route
-      path="elements"
-      element={
-        <AppLayout>
+    <Route path="elements" element={<AppLayout />}>
+      <Route
+        index
+        element={
           <Suspense fallback={<Spin />}>
             <Elements />
           </Suspense>
-        </AppLayout>
-      }
-    />
+        }
+      />
+      <Route
+        path=":elementId"
+        element={
+          <Suspense fallback={<Spin />}>
+            <ElementDetails />
+          </Suspense>
+        }
+      />
+    </Route>
   </Routes>
 );
 
