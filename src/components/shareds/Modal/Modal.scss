@@ -1,0 +1,11 @@
+.Modal {
+  .ant-modal-footer {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+    & > * {
+      flex: 1;
+    }
+  }
+}
