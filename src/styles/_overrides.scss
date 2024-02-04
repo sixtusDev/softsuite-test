@@ -1,0 +1,55 @@
+@import './variables';
+@import './mixins';
+
+.ant-picker-outlined {
+  &:hover,
+  &:focus,
+  &:focus-within {
+    border-color: $secondary-color;
+  }
+}
+
+.ant-input-outlined:focus,
+.ant-input-outlined:hover {
+  border-color: $secondary-color !important;
+}
+
+.ant-select-outlined:focus .ant-select-selector,
+.ant-select-outlined:active .ant-select-selector,
+.ant-select-outlined:hover .ant-select-selector {
+  border-color: $secondary-color !important;
+}
+
+.ant-radio-wrapper .ant-radio-checked::after {
+  border: 1px solid $secondary-color;
+}
+
+.ant-radio-wrapper {
+  &:hover {
+    .ant-radio-inner {
+      border-color: $secondary-color;
+    }
+  }
+}
+
+.ant-switch.ant-switch-checked {
+  &:hover:not(.ant-switch-disabled) {
+    background: $secondary-color;
+  }
+}
+
+.ant-radio-wrapper {
+  .ant-radio-checked .ant-radio-inner {
+    border-color: $secondary-color;
+    background-color: $secondary-color;
+  }
+}
+
+.ant-form-item-label > label {
+  @include font-style($font-weight-normal, $font-size-sm, $line-height-base);
+  color: $primary-color-tint-40 !important;
+}
+
+.ant-switch.ant-switch-checked {
+  background-color: $secondary-color;
+}

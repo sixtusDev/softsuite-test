@@ -35,6 +35,11 @@
   color: $primary-color;
 }
 
+.form-heading {
+  @include font-style($font-weight-bold, $font-size-xxl, $line-height-sub);
+  color: $primary-color;
+}
+
 .mb-20 {
   margin-bottom: 20px;
 }
@@ -43,12 +48,34 @@
   margin-bottom: 30px;
 }
 
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mb-50 {
+  margin-bottom: 50px;
+}
+
+.p-12 {
+  padding: 12px;
+}
+
+.h-45 {
+  height: 45px;
+}
+
+.form-input-container {
+  border: 1px solid $light-grey-300;
+  height: 45px;
+  line-height: 45px;
+  width: 100%;
+  border-radius: 6px;
+  padding: 0 10px;
+}
+
 .details-container {
   display: flex;
   justify-content: space-between;
-  // padding: 16px;
-  // gap: 16px;
-  // border: 1px solid $light-grey-100;
 }
 
 .details-column {
@@ -82,4 +109,9 @@
 
 .details-value {
   @include font-style($font-weight-medium, $font-size-sm, $line-height-base);
+}
+
+.form-input-label {
+  @include font-style($font-weight-normal, $font-size-sm, $line-height-base);
+  color: $primary-color-tint-40;
 }
