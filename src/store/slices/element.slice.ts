@@ -49,14 +49,16 @@ export const fetchElements = createAsyncThunk('element/fetchElements', async () 
   return response;
 });
 
-export const fetchElementById = createAsyncThunk(
-  '/element/fetchElementById',
-  async (id: string) => {
-    const response = await request.get<{ data: Element }>(`elements/${id}`);
-    console.log({ response });
-    return response;
-  },
-);
+export const fetchElementById = createAsyncThunk('element/fetchElementById', async (id: string) => {
+  const response = await request.get<{ data: Element }>(`elements/${id}`);
+  return response;
+});
+
+export const createElement = createAsyncThunk('element/createElement', async (element: Element) => {
+  const { id, ...rest } = element;
+  const response = await request.post<string, Element>('element', JSON.stringify(rest));
+  return response;
+});
 
 export const elementSlice = createSlice({
   name: 'element',
@@ -93,6 +95,15 @@ export const elementSlice = createSlice({
         const state = _state;
         state.status = ERequestStatus.FAILED;
         state.error = action.error;
+      })
+      .addCase(createElement.pending, (_state) => {
+        const state = _state;
+        state.status = ERequestStatus.LOADING;
+      })
+      .addCase(createElement.fulfilled, (_state, action) => {
+        const state = _state;
+        state.status = ERequestStatus.SUCCEEDED;
+        state.elements = [...state.elements, action.payload];
       });
   },
 });
