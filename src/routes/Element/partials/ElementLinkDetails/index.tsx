@@ -25,7 +25,6 @@ export const ElementLinkDetails = ({
 
   const JSX = (
     <div>
-      <h1 className="main-heading mb-20">Element Link Details</h1>
       <div className="details-container">
         <div className="details-column">
           <div className="details-item">

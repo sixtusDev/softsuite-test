@@ -96,7 +96,6 @@ export const ElementForm = ({ isModalOpen, onCloseModal }: ElementFormProps) => 
 
   return (
     <Modal
-      // destroyOnClose
       open={isModalOpen}
       onCancel={onCloseModal}
       closeIcon={false}

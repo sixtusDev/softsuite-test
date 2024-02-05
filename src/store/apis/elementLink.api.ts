@@ -34,6 +34,7 @@ export const ElementLinkApi = commonApi.injectEndpoints({
   endpoints: (build) => ({
     fetchElementLinks: build.query<{ data: { content: ElementLink[]; total: number } }, string>({
       query: (elementId) => `elements/${elementId}/elementlinks`,
+      providesTags: ['ElementLink'],
     }),
     fetchElementLinkById: build.query<
       { data: ElementLink },
@@ -42,6 +43,13 @@ export const ElementLinkApi = commonApi.injectEndpoints({
       query: ({ elementId, elementLinkId }) =>
         `elements/${elementId}/elementlinks/${elementLinkId}`,
     }),
+    deleteElementLink: build.mutation({
+      query: ({ elementId, elementLinkId }) => ({
+        url: `elements/${elementId}/elementlinks/${elementLinkId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['ElementLink'],
+    }),
   }),
 });
 
@@ -49,4 +57,5 @@ export const {
   useFetchElementLinksQuery,
   useFetchElementLinkByIdQuery,
   useLazyFetchElementLinkByIdQuery,
+  useDeleteElementLinkMutation,
 } = ElementLinkApi;

@@ -1,15 +1,15 @@
 import React from 'react';
-
+import { Button as AntdButton, ButtonProps as AntdButtonProps } from 'antd';
 import './Button.scss';
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+type ButtonProps = AntdButtonProps;
 
 export const Button = ({ children, ...rest }: ButtonProps) => {
   const combinedClassName = `Button ${rest.className || ''}`.trim();
 
   return (
-    <button {...rest} className={combinedClassName}>
+    <AntdButton {...rest} className={combinedClassName}>
       {children}
-    </button>
+    </AntdButton>
   );
 };

@@ -31,11 +31,20 @@ export const ElementApi = commonApi.injectEndpoints({
   endpoints: (build) => ({
     fetchElements: build.query<{ data: { content: Element[]; total: number } }, void>({
       query: () => 'elements',
+      providesTags: ['Element'],
     }),
     fetchElementById: build.query<{ data: Element }, string>({
       query: (id) => `elements/${id}`,
     }),
+    deleteElement: build.mutation({
+      query: (id) => ({
+        url: `elements/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Element'],
+    }),
   }),
 });
 
-export const { useFetchElementsQuery, useFetchElementByIdQuery } = ElementApi;
+export const { useFetchElementsQuery, useFetchElementByIdQuery, useDeleteElementMutation } =
+  ElementApi;
