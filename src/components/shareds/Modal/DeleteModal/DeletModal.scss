@@ -1,0 +1,27 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.DeleteModal {
+  text-align: center;
+
+  &__message {
+    @include font-style($font-weight-medium, $font-size-xxl, $line-height-sub);
+    color: $primary-color;
+  }
+
+  &__submessage {
+    @include font-style($font-weight-medium, $font-size-md, $line-height-base);
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
+
+  .ant-modal-footer {
+    display: flex;
+    gap: 10px;
+
+    & > button {
+      flex: 1;
+      margin-top: 20px;
+    }
+  }
+}
