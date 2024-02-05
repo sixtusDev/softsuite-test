@@ -8556,6 +8556,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"slugify@npm:^1.6.6":
+  version: 1.6.6
+  resolution: "slugify@npm:1.6.6"
+  checksum: 04773c2d3b7aea8d2a61fa47cc7e5d29ce04e1a96cbaec409da57139df906acb3a449fac30b167d203212c806e73690abd4ff94fbad0a9a7b7ea109a2a638ae9
+  languageName: node
+  linkType: hard
+
 "smart-buffer@npm:^4.2.0":
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
@@ -9264,6 +9271,7 @@ __metadata:
     react-redux: ^8.0.2
     react-router-dom: 6
     sass: ^1.54.8
+    slugify: ^1.6.6
     typescript: ^4.6.4
     uuid: ^9.0.1
     vite: ^4.0.3

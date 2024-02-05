@@ -7,6 +7,9 @@ import { Button } from '../../../../components/shareds/Button';
 import { Input } from '../../../../components/shareds/Input';
 import { Select } from '../../../../components/shareds/Select';
 import { TextArea } from '../../../../components/shareds/TextArea';
+import { removeUndefinedProps } from '../../../../common/utils';
+import { useAppDispatch } from '../../../../store/hooks';
+import { createElement } from '../../../../store/slices/element.slice';
 
 type ElementFormProps = {
   isModalOpen: boolean;
@@ -18,16 +21,16 @@ const MAX_STEP = 1;
 const stepItems = [{ title: 'Element Details' }, { title: 'Additional Details' }];
 
 const classicationOptions = [
-  { label: 'Class 1', value: '1xx1' },
-  { label: 'Class 2', value: '2xx2' },
+  { label: 'Class 1', value: 123 },
+  { label: 'Class 2', value: 456 },
 ];
 const categoryOptions = [
-  { label: 'Category 1', value: '1xx1' },
-  { label: 'Category 2', value: '2xx2' },
+  { label: 'Category 1', value: 789 },
+  { label: 'Category 2', value: 383 },
 ];
 const payRunOptions = [
-  { label: 'Payrun 1', value: '123' },
-  { label: 'Payrun 2', value: '234' },
+  { label: 'Payrun 1', value: 937 },
+  { label: 'Payrun 2', value: 989 },
 ];
 const monthOptions = [
   { label: 'January', value: 'January' },
@@ -38,9 +41,12 @@ const monthOptions = [
 
 export const ElementForm = ({ isModalOpen, onCloseModal }: ElementFormProps) => {
   const [currentStep, setCurrentStep] = useState(INITIAL_STEP);
+  const [form1Values, setForm1Values] = useState({});
 
   const form1 = useRef<FormInstance | null>(null);
   const form2 = useRef<FormInstance | null>(null);
+
+  const dispatch = useAppDispatch();
 
   const nextStep = () => {
     if (currentStep < MAX_STEP) {
@@ -55,12 +61,33 @@ export const ElementForm = ({ isModalOpen, onCloseModal }: ElementFormProps) => 
     onCloseModal();
   };
 
-  const onFinishForm1 = () => {
+  const onFinishForm1 = (values: any) => {
+    setForm1Values(values);
     nextStep();
   };
 
-  const onFinishForm2 = (values: any) => {
-    console.log('Finished');
+  const onFinishForm2 = async (form2Values: any) => {
+    removeUndefinedProps(form1Values);
+    removeUndefinedProps(form2Values);
+
+    const payload = {
+      ...form1Values,
+      ...form2Values,
+      ...(form2Values.effectiveStartDate && {
+        effectiveStartDate: new Date(form2Values.effectiveStartDate).toISOString(),
+      }),
+      ...(form2Values.effectiveEndDate && {
+        effectiveEndDate: new Date(form2Values.effectiveEndDate).toISOString(),
+      }),
+    };
+    console.log({ payload });
+
+    try {
+      await dispatch(createElement(payload));
+      // onCloseModal();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSubmit = useCallback(() => {
@@ -69,7 +96,7 @@ export const ElementForm = ({ isModalOpen, onCloseModal }: ElementFormProps) => 
 
   return (
     <Modal
-      destroyOnClose
+      // destroyOnClose
       open={isModalOpen}
       onCancel={onCloseModal}
       closeIcon={false}
@@ -167,7 +194,7 @@ export const ElementForm = ({ isModalOpen, onCloseModal }: ElementFormProps) => 
                 <Col span={12}>
                   <Form.Item
                     label="Effective Start Date"
-                    name="effectiveSartDate"
+                    name="effectiveStartDate"
                     rules={[{ required: true }]}
                   >
                     <DatePicker style={{ width: '100%' }} className="h-45" />
@@ -233,7 +260,7 @@ export const ElementForm = ({ isModalOpen, onCloseModal }: ElementFormProps) => 
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Status" name="status" rules={[{ required: true }]}>
+                  <Form.Item label="Status" name="status">
                     <div className="form-input-container">
                       <Switch />
                     </div>

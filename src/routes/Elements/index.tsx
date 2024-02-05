@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToolBar } from './partials/ToolBar';
-import { ElementsTableWithAsyncState } from './partials/ElementsTable';
+import { ElementsTable } from './partials/ElementsTable';
 
 const Elements = () => (
   <div className="Elements">
@@ -9,7 +9,7 @@ const Elements = () => (
       <ToolBar />
     </div>
     <div>
-      <ElementsTableWithAsyncState />
+      <ElementsTable />
     </div>
   </div>
 );

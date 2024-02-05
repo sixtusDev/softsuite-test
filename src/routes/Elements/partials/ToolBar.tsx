@@ -6,8 +6,6 @@ import PlusIcon from '../../../assets/icons/plus.svg?react';
 import { Button } from '../../../components/shareds/Button';
 import { ElementForm } from './ElementForm';
 
-import './ToolBar.scss';
-
 export const ToolBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

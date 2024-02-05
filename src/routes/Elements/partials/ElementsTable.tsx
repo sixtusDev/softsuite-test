@@ -3,8 +3,6 @@ import { TableProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import { useAppSelector } from '../../../store/hooks';
-import { selectElementsState, Element, fetchElements } from '../../../store/slices/element.slice';
 import { withAsyncState } from '../../../hoc/withAsyncState';
 import { EmptyContent } from '../../../components/shareds/EmptyContent';
 import { Table } from '../../../components/shareds/Table';
@@ -15,6 +13,7 @@ import MoreIcon from '../../../assets/icons/more.svg?react';
 import ViewIcon from '../../../assets/icons/view.svg?react';
 import PencilIcon from '../../../assets/icons/pencil.svg?react';
 import BinIcon from '../../../assets/icons/bin.svg?react';
+import { Element, useFetchElementsQuery } from '../../../store/apis/element.api';
 
 const elementTableColumns: TableProps<Element>['columns'] = [
   { title: 'Name', key: '1', dataIndex: 'name' },
@@ -61,18 +60,16 @@ const elementTableColumns: TableProps<Element>['columns'] = [
   },
 ];
 
-const ElementsTable = () => {
-  const { elements, total } = useAppSelector(selectElementsState);
-
+const WrappedElementTable = ({ elements, total }: { elements?: Element[]; total?: number }) => {
   const reformedElements = useMemo(
-    () => elements.map((el) => ({ ...el, status: <Status value={el.status} /> })),
+    () => elements?.map((el: any) => ({ ...el, status: <Status value={el.status} /> })),
     [elements],
   );
 
   return (
     <div>
-      {total > 0 ? (
-        <Table columns={elementTableColumns} dataSource={reformedElements} />
+      {total && total > 0 ? (
+        <Table columns={elementTableColumns} dataSource={reformedElements || []} />
       ) : (
         <div
           style={{
@@ -89,8 +86,13 @@ const ElementsTable = () => {
   );
 };
 
-export const ElementsTableWithAsyncState = withAsyncState(
-  ElementsTable,
-  fetchElements,
-  selectElementsState,
-);
+export const ElementsTable = () => {
+  const { data, error, isLoading } = useFetchElementsQuery();
+
+  const ElementsTableWithAsyncState = withAsyncState(
+    <WrappedElementTable elements={data?.data.content} total={data?.data.total} />,
+    isLoading,
+    error,
+  );
+  return <ElementsTableWithAsyncState />;
+};
