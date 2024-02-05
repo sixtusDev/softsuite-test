@@ -1,0 +1,21 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.SuccessModal {
+  text-align: center;
+
+  &__message {
+    @include font-style($font-weight-medium, $font-size-xxl, $line-height-sub);
+    color: $primary-color;
+  }
+
+  .ant-modal-footer {
+    display: flex;
+    gap: 10px;
+
+    & > button {
+      flex: 1;
+      margin-top: 20px;
+    }
+  }
+}
