@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToolBar } from './partials/ToolBar';
+import { ToolBar } from './partials/ElementsToolBar';
 import { ElementsTable } from './partials/ElementsTable';
 
 const Elements = () => (

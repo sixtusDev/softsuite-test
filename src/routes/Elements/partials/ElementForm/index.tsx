@@ -141,10 +141,8 @@ export const ElementForm = ({ isModalOpen, onCloseModal }: ElementFormProps) => 
         effectiveEndDate: new Date(form2Values.effectiveEndDate).toISOString(),
       }),
     };
-    console.log({ payload });
 
     const result: any = await createElement(payload);
-    console.log(result);
     if (result.error) {
       return notification.error({
         message: 'Delete Element',

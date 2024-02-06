@@ -4,24 +4,24 @@ import { TableProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import { withAsyncState } from '../../../hoc/withAsyncState';
-import { EmptyContent } from '../../../components/shareds/EmptyContent';
-import { Table } from '../../../components/shareds/Table';
-import { Status } from '../../../components/shareds/Status';
-import { MoreOptions } from '../../../components/shareds/MoreOptions';
-import { DeleteModal } from '../../../components/shareds/Modal/DeleteModal';
-import { SuccessModal } from '../../../components/shareds/Modal/SuccessModal';
+import { withAsyncState } from '../../../../hoc/withAsyncState';
+import { EmptyContent } from '../../../../components/shareds/EmptyContent';
+import { Table } from '../../../../components/shareds/Table';
+import { Status } from '../../../../components/shareds/Status';
+import { MoreOptions } from '../../../../components/shareds/MoreOptions';
+import { DeleteModal } from '../../../../components/shareds/Modal/DeleteModal';
+import { SuccessModal } from '../../../../components/shareds/Modal/SuccessModal';
 import {
   Element,
   useDeleteElementMutation,
   useFetchElementsQuery,
-} from '../../../store/apis/element.api';
+} from '../../../../store/apis/element.api';
 
-import MoreIcon from '../../../assets/icons/more.svg?react';
-import ViewIcon from '../../../assets/icons/view.svg?react';
-import PencilIcon from '../../../assets/icons/pencil.svg?react';
-import BinIcon from '../../../assets/icons/bin.svg?react';
-import CheckIcon from '../../../assets/icons/check3.svg?react';
+import MoreIcon from '../../../../assets/icons/more.svg?react';
+import ViewIcon from '../../../../assets/icons/view.svg?react';
+import PencilIcon from '../../../../assets/icons/pencil.svg?react';
+import BinIcon from '../../../../assets/icons/bin.svg?react';
+import CheckIcon from '../../../../assets/icons/check3.svg?react';
 
 const DELETE_ELEMENT_SUCCESS_MESSAGE = 'Element has been deleted successfully';
 const DELETE_ELEMENT_ERROR_MESSAGE = 'Error occured deleting element';

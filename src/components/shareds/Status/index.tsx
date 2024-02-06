@@ -1,5 +1,5 @@
 import React from 'react';
-import { Status as EStatus } from '../../../store/slices/element.slice';
+import { Status as EStatus } from '../../../store/apis/element.api';
 
 import './Status.scss';
 
