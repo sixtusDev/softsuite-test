@@ -1,5 +1,6 @@
 import React, { FunctionComponent, lazy, Suspense } from 'react';
 import { Spin } from 'antd';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Routes, Route } from 'react-router-dom';
 
 import AppLayout from '../components/shareds/AppLayout';
@@ -13,17 +14,21 @@ const Router: FunctionComponent = () => (
       <Route
         index
         element={
-          <Suspense fallback={<Spin />}>
-            <Elements />
-          </Suspense>
+          <ErrorBoundary fallback={<p>An error occured!</p>}>
+            <Suspense fallback={<Spin />}>
+              <Elements />
+            </Suspense>
+          </ErrorBoundary>
         }
       />
       <Route
         path=":elementId"
         element={
-          <Suspense fallback={<Spin />}>
-            <ElementDetails />
-          </Suspense>
+          <ErrorBoundary fallback={<p>An error occured!</p>}>
+            <Suspense fallback={<Spin />}>
+              <ElementDetails />
+            </Suspense>
+          </ErrorBoundary>
         }
       />
     </Route>

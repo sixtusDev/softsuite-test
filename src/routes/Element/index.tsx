@@ -8,7 +8,7 @@ const Element = () => {
   const { elementId } = useParams();
 
   return (
-    <div>
+    <div className="content">
       <h1 className="main-heading mb-30">Element Details</h1>
       <ElementDetails id={elementId!} />
       <div className="mt-100">

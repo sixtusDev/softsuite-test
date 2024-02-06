@@ -119,3 +119,9 @@
   @include font-style($font-weight-normal, $font-size-sm, $line-height-base);
   color: $primary-color-tint-40;
 }
+
+.content {
+  background-color: $white;
+  border-radius: 8px;
+  padding: 24px;
+}

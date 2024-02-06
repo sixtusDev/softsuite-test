@@ -10,6 +10,7 @@ type ContextSwitcherProps = {
   label: string;
   selectedOption?: Option;
   options: Option[];
+  type?: 'dropdown' | 'menu';
   menuStyle?: React.CSSProperties;
   optionsStyle?: React.CSSProperties;
 };
@@ -20,6 +21,7 @@ export const ContextSwitcher = ({
   options,
   menuStyle,
   optionsStyle,
+  type = 'dropdown',
   selectedOption = options[3],
 }: ContextSwitcherProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +45,12 @@ export const ContextSwitcher = ({
         )}
       </div>
       {isOpen ? (
-        <div style={optionsStyle} className="ContextSwitcher__options">
+        <div
+          style={optionsStyle}
+          className={`ContextSwitcher__options ${
+            type === 'menu' ? 'ContextSwitcher__options--menu' : ''
+          }`}
+        >
           {options.map((option) => (
             <div className="ContextSwitcher__option-block" key={option.value}>
               {option.value === selectedOption.value ? (

@@ -1,12 +1,5 @@
-import React, { useEffect } from 'react';
-import { SerializedError } from '@reduxjs/toolkit';
+import React from 'react';
 import { Skeleton } from 'antd';
-import { ERequestStatus } from '../common/request';
-
-type StateProps = {
-  status: ERequestStatus;
-  error: SerializedError | null;
-};
 
 type FallbackProps = {
   error?: string;
@@ -24,7 +17,7 @@ export function withAsyncState<T extends { id?: string }>(
   LoadingComponent: React.ComponentType = DefaultLoadingComponent,
   ErrorComponent: React.ComponentType<FallbackProps> = DefaultErrorComponent,
 ): React.FC<T> {
-  const WithAsyncState = (props: T) => {
+  const WithAsyncState = () => {
     if (isLoading) {
       return <LoadingComponent />;
     }

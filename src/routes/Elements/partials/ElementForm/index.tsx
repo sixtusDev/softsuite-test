@@ -164,6 +164,7 @@ export const ElementForm = ({ isModalOpen, onCloseModal }: ElementFormProps) => 
       <Modal
         open={isModalOpen}
         onCancel={onCloseModal}
+        destroyOnClose
         closeIcon={false}
         width="700px"
         footer={[

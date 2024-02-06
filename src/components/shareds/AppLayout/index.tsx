@@ -13,9 +13,10 @@ import SwitchIcon from '../../../assets/icons/switch.svg?react';
 import HomeIcon from '../../../assets/icons/home.svg?react';
 import Logo from '../../../assets/icons/logo.svg?react';
 
-import './AppLayout.scss';
 import { ContextSwitcher } from '../ContextSwitcher';
 import { Search } from '../Search';
+
+import './AppLayout.scss';
 
 const { Header, Content, Sider } = Layout;
 
@@ -27,12 +28,12 @@ const AppLayout = ({ children }: AppLayoutProps) => {
   const [contentHeight, setContentHeight] = useState('auto');
   const [selectedMenuItem, setSelectedMenuItem] = useState<any>();
 
-  const contentRef = useRef(null);
+  const contentRef = useRef<any>(null);
   const headerRef = useRef<any>(null);
   const footerRef = useRef<any>(null);
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken();
 
   useEffect(() => {
@@ -102,6 +103,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             { label: 'Payroll Management', value: '2' },
             { label: 'Self Service', value: '3' },
           ]}
+          type="menu"
         />
         <Search style={{ width: '354px', marginLeft: '30px' }} />
       </Header>
@@ -131,20 +133,16 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         </Sider>
         <Layout
           ref={contentRef}
-          style={{ padding: '0 24px 24px', minHeight: contentHeight, overflowY: 'auto' }}
+          style={{ height: contentHeight, overflowY: 'auto', padding: '20px' }}
         >
-          <Breadcrumb style={{ margin: '16px 0' }} separator=">">
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <Content
-            className="AppLayout__content"
-            style={{
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
+          <div className="mb-20">
+            <Breadcrumb separator=">">
+              <Breadcrumb.Item>Home</Breadcrumb.Item>
+              <Breadcrumb.Item>List</Breadcrumb.Item>
+              <Breadcrumb.Item>App</Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
+          <Content className="AppLayout__content">
             {children}
             <Outlet />
           </Content>

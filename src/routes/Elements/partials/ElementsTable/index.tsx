@@ -88,7 +88,7 @@ export const ElementsTable = () => {
             {
               key: uuid(),
               label: (
-                <Link to={`/elements/${element.id}`} className="more-options-action">
+                <Link to={`/${element.id}`} className="more-options-action">
                   <ViewIcon /> <span>View Element Links</span>
                 </Link>
               ),

@@ -68,9 +68,6 @@ export const CreateElementLink = ({
   const [fetchUnions, { data: unions }] = useLazyFetchLookupValuesQuery();
   const [createElementLink, { isLoading: isLoadingCreateElementLink }] =
     useCreateElementLinkMutation();
-  // Additional info
-  const [fetchWardrobes, { data: wardrobes }] = useLazyFetchLookupValuesQuery();
-  const [fetchHousing, { data: housing }] = useLazyFetchLookupValuesQuery();
 
   const [notification, contextHolder] = useNotification();
 
@@ -90,8 +87,6 @@ export const CreateElementLink = ({
     fetchJobTitle(jobTitleId);
     fetchLocations(locationId);
     fetchUnions(unionId);
-    fetchWardrobes(wardrobeId);
-    fetchHousing(housingId);
   }, [lookups]);
 
   useEffect(() => {
@@ -196,7 +191,10 @@ export const CreateElementLink = ({
   }, [formValues.step1, formValues.step2, formValues.step3]);
 
   const prevStep = useCallback(() => {
-    if (currentStep <= INITIAL_STEP) return;
+    if (currentStep <= INITIAL_STEP) {
+      onCloseModal();
+      return;
+    }
     setCurrentStep(currentStep - 1);
   }, [currentStep]);
 
@@ -230,6 +228,7 @@ export const CreateElementLink = ({
       <Modal
         open={isModalOpen}
         forceRender
+        destroyOnClose
         onCancel={onCloseModal}
         closeIcon={false}
         width="700px"
@@ -247,7 +246,7 @@ export const CreateElementLink = ({
         ]}
       >
         <div>
-          <h1 className="form-heading mb-50">Create Element</h1>
+          <h1 className="form-heading mb-50">Create Element Link</h1>
           <Steps current={currentStep} items={stepItems} />
 
           <Form layout="vertical" form={form} className="mt-30 mb-30">

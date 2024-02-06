@@ -1,7 +1,8 @@
 @import '../../../styles/variables';
 
 .AppLayout {
-  max-height: 100vh !important;
+  height: 100vh !important;
+  overflow-y: hidden;
 
   .AppLayout__header {
     display: flex;
@@ -26,8 +27,8 @@
   }
 
   .AppLayout__content {
-    padding: 24px;
     margin: 0;
+    height: max-content !important;
   }
 
   .AppLayout__footer {
