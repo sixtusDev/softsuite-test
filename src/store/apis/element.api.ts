@@ -31,6 +31,24 @@ export const ElementApi = commonApi.injectEndpoints({
   endpoints: (build) => ({
     fetchElements: build.query<{ data: { content: Element[]; total: number } }, void>({
       query: () => 'elements',
+      onQueryStarted: async (arg, { queryFulfilled, dispatch }) => {
+        try {
+          const { data } = await queryFulfilled;
+
+          data.data.content.forEach(({ categoryId, categoryValueId }) => {
+            if (categoryId && categoryValueId) {
+              dispatch(
+                ElementApi.endpoints.fetchLookupValueById.initiate({
+                  lookupId: categoryId,
+                  lookupValueId: categoryValueId,
+                }),
+              );
+            }
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      },
       providesTags: ['Element'],
     }),
     fetchElementById: build.query<{ data: Element }, string>({
@@ -43,8 +61,24 @@ export const ElementApi = commonApi.injectEndpoints({
       }),
       invalidatesTags: ['Element'],
     }),
+    createElement: build.mutation<any, Element>({
+      query: (payload: Element) => ({
+        url: '/elements',
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['Element'],
+    }),
+    fetchLookupValueById: build.query({
+      query: ({ lookupId, lookupValueId }) => `lookups/${lookupId}/lookupvalue/${lookupValueId}`,
+    }),
   }),
 });
 
-export const { useFetchElementsQuery, useFetchElementByIdQuery, useDeleteElementMutation } =
-  ElementApi;
+export const {
+  useFetchElementsQuery,
+  useFetchElementByIdQuery,
+  useFetchLookupValueByIdQuery,
+  useDeleteElementMutation,
+  useCreateElementMutation,
+} = ElementApi;

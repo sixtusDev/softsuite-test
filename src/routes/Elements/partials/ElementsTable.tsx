@@ -44,11 +44,11 @@ export const ElementsTable = () => {
 
   const handleOpenSuccessModal = useCallback(
     () => setIsSuccessModalOpen(true),
-    [isDeleteModalOpen],
+    [isSuccessModalOpen],
   );
   const handleCloseSuccessModal = useCallback(
     () => setIsSuccessModalOpen(false),
-    [isDeleteModalOpen],
+    [isSuccessModalOpen],
   );
   const handleOpenDeleteModal = useCallback(() => setIsDeleteModalOpen(true), [isDeleteModalOpen]);
   const handleCloseDeleteModal = useCallback(

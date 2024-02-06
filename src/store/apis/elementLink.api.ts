@@ -43,6 +43,14 @@ export const ElementLinkApi = commonApi.injectEndpoints({
       query: ({ elementId, elementLinkId }) =>
         `elements/${elementId}/elementlinks/${elementLinkId}`,
     }),
+    createElementLink: build.mutation<any, { elementId: string; payload: ElementLink }>({
+      query: ({ elementId, payload }) => ({
+        url: `/elements/${elementId}/elementlinks`,
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['ElementLink'],
+    }),
     deleteElementLink: build.mutation({
       query: ({ elementId, elementLinkId }) => ({
         url: `elements/${elementId}/elementlinks/${elementLinkId}`,
@@ -58,4 +66,5 @@ export const {
   useFetchElementLinkByIdQuery,
   useLazyFetchElementLinkByIdQuery,
   useDeleteElementLinkMutation,
+  useCreateElementLinkMutation,
 } = ElementLinkApi;

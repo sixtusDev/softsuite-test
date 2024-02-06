@@ -5,8 +5,13 @@ import { Button } from '../../../../components/shareds/Button';
 
 import FilterIcon from '../../../../assets/icons/filter.svg?react';
 import PlusIcon from '../../../../assets/icons/plus.svg?react';
+import { CreateElementLink } from '../CreateElementLink';
 
-export const ElementLinksToolBar = () => {
+type ElementLinksToolBarProps = {
+  elementId: string;
+};
+
+export const ElementLinksToolBar = ({ elementId }: ElementLinksToolBarProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showCreateElementForm = () => {
@@ -30,7 +35,11 @@ export const ElementLinksToolBar = () => {
           </Button>
         </div>
       </div>
-      {/* <ElementForm isModalOpen={isModalOpen} onCloseModal={handleCloseModal} /> */}
+      <CreateElementLink
+        elementId={elementId}
+        isModalOpen={isModalOpen}
+        onCloseModal={handleCloseModal}
+      />
     </>
   );
 };
