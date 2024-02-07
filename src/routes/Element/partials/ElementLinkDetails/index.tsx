@@ -1,89 +1,81 @@
-import React, { useEffect } from 'react';
-import { useLazyFetchElementLinkByIdQuery } from '../../../../store/apis/elementLink.api';
+import React from 'react';
 import { withAsyncState } from '../../../../hoc/withAsyncState';
+import { useElementLinkWithValues } from '../../../../hooks/useElementLinkWithValues';
 
 type ElementLinkDetailsProps = {
   elementId: string;
   elementLinkId: string;
-  openDrawer: boolean;
   onCloseDrawer: () => void;
 };
 
 export const ElementLinkDetails = ({
   elementId,
   elementLinkId,
-  openDrawer,
   onCloseDrawer,
 }: ElementLinkDetailsProps) => {
-  const [trigger, { data, isLoading, error }] = useLazyFetchElementLinkByIdQuery();
-
-  useEffect(() => {
-    if (elementId && elementLinkId) {
-      trigger({ elementId, elementLinkId });
-    }
-  }, [elementId, elementLinkId]);
+  const { elementLink, isLoading, error } = useElementLinkWithValues(elementId, elementLinkId);
 
   const JSX = (
     <div>
       <div className="details-container">
         <div className="details-column">
           <div className="details-item">
-            <span className="details-label">ELEMENT NAME</span>
-            <span className="details-name">{data?.data.name}</span>
+            <span className="details-label">NAME</span>
+            <span className="details-name">{elementLink?.name}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">ELEMENT CATEGORY</span>
-            <span className="details-name">{data?.data.employeeCategoryId}</span>
+            <span className="details-label">DEPARTMENT</span>
+            <span className="details-name">{elementLink?.departmentName}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">DESCRIPTION</span>
-            <span className="details-name">{data?.data?.amountType}</span>
+            <span className="details-label">EMPLOYEE TYPE</span>
+            <span className="details-name">{elementLink?.employeeTypeName}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">EFFECTIVE START DATE</span>
-            <span className="details-name">{data?.data?.status}</span>
+            <span className="details-label">EFFECTIVE DATE</span>
+            <span className="details-name">{elementLink?.effectiveEndDate}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">PROCESSING TYPE</span>
-            <span className="details-name">{data?.data?.suborganizationId}</span>
+            <span className="details-label">GRADE</span>
+            <span className="details-name">{elementLink?.gradeName}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">PAY MONTHS</span>
-            <span className="details-name">{data?.data.automate}</span>
+            <span className="details-label">AMOUNT TYPE</span>
+            <span className="details-name">{elementLink?.amountType}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">STATUS</span>
-            <span className="details-name">{data?.data?.status}</span>
+            <span className="details-label">JOB TITLE</span>
+            <span className="details-name">{elementLink?.jobTitleName}</span>
           </div>
         </div>
         <div className="details-column">
           <div className="details-item">
-            <span className="details-label">ELEMENT NAME</span>
-            <span className="details-name">{data?.data.name}</span>
+            <span className="details-label">SUB ORGANIZATION</span>
+            <span className="details-name">{elementLink?.subOrganizationName}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">ELEMENT CATEGORY</span>
-            <span className="details-name">{data?.data.employeeCategoryId}</span>
+            <span className="details-label">LOCATION</span>
+            <span className="details-name">{elementLink?.locationName}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">DESCRIPTION</span>
-            <span className="details-name">{data?.data?.amountType}</span>
+            <span className="details-label">EMLOYEE CATEGORY</span>
+            <span className="details-name">{elementLink?.status}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">EFFECTIVE START DATE</span>
-            <span className="details-name">{data?.data?.status}</span>
+            <span className="details-label">GRADE STEP</span>
+            <span className="details-name">{elementLink?.gradeStepName}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">PROCESSING TYPE</span>
-            <span className="details-name">{data?.data?.suborganizationId}</span>
+            <span className="details-label">AMOUNT</span>
+            <span className="details-name">{elementLink?.amount}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">PAY MONTHS</span>
-            <span className="details-name">{data?.data.automate}</span>
+            <span className="details-label">LOCATION</span>
+            <span className="details-name">{elementLink?.locationName}</span>
           </div>
           <div className="details-item">
-            <span className="details-label">STATUS</span>
-            <span className="details-name">{data?.data?.status}</span>
+            <span className="details-label">EFFECTIVE END DATE</span>
+            <span className="details-name">{elementLink?.effectiveEndDate}</span>
           </div>
         </div>
       </div>

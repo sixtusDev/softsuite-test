@@ -1,4 +1,3 @@
-import Item from 'antd/es/list/Item';
 import { commonApi } from '../common.api';
 
 export type Lookup = {
@@ -35,7 +34,32 @@ export const loopupApi = commonApi.injectEndpoints({
     fetchLookupValues: build.query<LookupValue[], string>({
       query: (lookupId) => `lookups/${lookupId}/lookupvalues`,
     }),
+    fetchAndNormalizeLookupValues: build.query<{ [key: string]: LookupValue }, void>({
+      query: () => 'lookupvalues',
+      transformResponse: (response: LookupValue[]) => {
+        const transformedLookupValues: { [key: string]: LookupValue } = {};
+        response.forEach((lookupValue) => {
+          transformedLookupValues[lookupValue.id] = lookupValue;
+        });
+        return transformedLookupValues;
+      },
+    }),
+    fetchTransformedLookupValues: build.query<{ [key: string]: LookupValue }, string>({
+      query: (lookupId) => `lookups/${lookupId}/lookupvalues`,
+      transformResponse: (response: LookupValue[]) => {
+        const transformedResponse: { [key: string]: LookupValue } = {};
+        response.forEach((lookupValue) => {
+          transformedResponse[lookupValue.id] = lookupValue;
+        });
+        return transformedResponse;
+      },
+    }),
   }),
 });
 
-export const { useFetchLookupsQuery, useLazyFetchLookupValuesQuery } = loopupApi;
+export const {
+  useFetchLookupsQuery,
+  useLazyFetchLookupValuesQuery,
+  useLazyFetchTransformedLookupValuesQuery,
+  useFetchAndNormalizeLookupValuesQuery,
+} = loopupApi;

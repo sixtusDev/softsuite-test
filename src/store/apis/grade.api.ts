@@ -19,8 +19,28 @@ export type GradeStep = {
 export const subOrganizationApi = commonApi.injectEndpoints({
   endpoints: (build) => ({
     fetchGrades: build.query<Grade[], void>({
-      query: () => 'suborganizations',
+      query: () => 'grade',
       transformResponse: (response: { data: Grade[] }) => response.data,
+    }),
+    fetchAndNormalizeGrades: build.query<{ [key: string]: Grade }, void>({
+      query: () => 'grade',
+      transformResponse: (response: { data: Grade[] }) => {
+        const transformedGrades: { [key: string]: Grade } = {};
+        response.data.forEach((grade) => {
+          transformedGrades[grade.id] = grade;
+        });
+        return transformedGrades;
+      },
+    }),
+    fetchAndNormalizeGradeSteps: build.query<{ [key: string]: GradeStep }, void>({
+      query: () => 'gradesteps',
+      transformResponse: (response: { data: GradeStep[] }) => {
+        const transformedGradeSteps: { [key: string]: GradeStep } = {};
+        response.data.forEach((gradeStep) => {
+          transformedGradeSteps[gradeStep.id] = gradeStep;
+        });
+        return transformedGradeSteps;
+      },
     }),
     fetchGradeSteps: build.query<GradeStep[], string>({
       query: (gradeId) => `suborganizations/${gradeId}/departments`,
@@ -29,4 +49,9 @@ export const subOrganizationApi = commonApi.injectEndpoints({
   }),
 });
 
-export const { useFetchGradesQuery, useLazyFetchGradeStepsQuery } = subOrganizationApi;
+export const {
+  useFetchGradesQuery,
+  useLazyFetchGradeStepsQuery,
+  useFetchAndNormalizeGradeStepsQuery,
+  useFetchAndNormalizeGradesQuery,
+} = subOrganizationApi;

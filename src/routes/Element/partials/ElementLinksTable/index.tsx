@@ -3,11 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { Drawer, TableProps } from 'antd';
 import useNotification from 'antd/es/notification/useNotification';
 
-import {
-  ElementLink,
-  useDeleteElementLinkMutation,
-  useFetchElementLinksQuery,
-} from '../../../../store/apis/elementLink.api';
+import { ElementLink, useDeleteElementLinkMutation } from '../../../../store/apis/elementLink.api';
 import { MoreOptions } from '../../../../components/shareds/MoreOptions';
 import { Table } from '../../../../components/shareds/Table';
 import { EmptyContent } from '../../../../components/shareds/EmptyContent';
@@ -21,6 +17,7 @@ import ViewIcon from '../../../../assets/icons/view.svg?react';
 import PencilIcon from '../../../../assets/icons/pencil.svg?react';
 import BinIcon from '../../../../assets/icons/bin.svg?react';
 import CheckIcon from '../../../../assets/icons/check3.svg?react';
+import { useSubOrganization } from '../../../../hooks/useElementLinksWithValues';
 
 type ElementLinksTableProps = {
   elementId: string;
@@ -40,9 +37,10 @@ export const ElementLinksTable = ({ elementId }: ElementLinksTableProps) => {
 
   const [notification, contextHolder] = useNotification();
 
-  const { data, isLoading, error } = useFetchElementLinksQuery(elementId);
+  // const { data, isLoading, error } = useFetchElementLinksQuery(elementId);
   const [deleteElementLink, { isLoading: isLoadingDeleteElementLink }] =
     useDeleteElementLinkMutation();
+  const { elementLinks, isLoading, error, total } = useSubOrganization(elementId);
 
   const showElementDetailsDrawer = useCallback(() => {
     setOpenElementDetailsDrawer(true);
@@ -83,9 +81,9 @@ export const ElementLinksTable = ({ elementId }: ElementLinksTableProps) => {
 
   const elementTableColumns: TableProps<ElementLink>['columns'] = [
     { title: 'Name', key: uuid(), dataIndex: 'name' },
-    { title: 'Sub-Organisation', key: uuid(), dataIndex: 'suborganizationId' },
-    { title: 'Department', key: uuid(), dataIndex: 'departmentId' },
-    { title: 'Employee Category', key: '4', dataIndex: 'employeeCategoryId' },
+    { title: 'Sub-Organisation', key: uuid(), dataIndex: 'subOrganizationName' },
+    { title: 'Department', key: uuid(), dataIndex: 'departmentName' },
+    { title: 'Employee Category', key: '4', dataIndex: 'employeeCategoryName' },
     { title: 'Amount', key: uuid(), dataIndex: 'amount' },
     {
       title: 'Action',
@@ -139,8 +137,8 @@ export const ElementLinksTable = ({ elementId }: ElementLinksTableProps) => {
 
   const JSX = (
     <div>
-      {data && data.data.total > 0 ? (
-        <Table columns={elementTableColumns} dataSource={data?.data.content || []} />
+      {total && total > 0 ? (
+        <Table columns={elementTableColumns} dataSource={elementLinks} />
       ) : (
         <div
           style={{
@@ -172,7 +170,6 @@ export const ElementLinksTable = ({ elementId }: ElementLinksTableProps) => {
           <ElementLinkDetails
             elementId={elementId}
             elementLinkId={elementLinkId}
-            openDrawer={openElementDetailsDrawer}
             onCloseDrawer={onCLoseElementDetailsDrawer}
           />
         </div>

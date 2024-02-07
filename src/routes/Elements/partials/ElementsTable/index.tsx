@@ -7,21 +7,17 @@ import { v4 as uuid } from 'uuid';
 import { withAsyncState } from '../../../../hoc/withAsyncState';
 import { EmptyContent } from '../../../../components/shareds/EmptyContent';
 import { Table } from '../../../../components/shareds/Table';
-import { Status } from '../../../../components/shareds/Status';
 import { MoreOptions } from '../../../../components/shareds/MoreOptions';
 import { DeleteModal } from '../../../../components/shareds/Modal/DeleteModal';
 import { SuccessModal } from '../../../../components/shareds/Modal/SuccessModal';
-import {
-  Element,
-  useDeleteElementMutation,
-  useFetchElementsQuery,
-} from '../../../../store/apis/element.api';
+import { Element, useDeleteElementMutation } from '../../../../store/apis/element.api';
 
 import MoreIcon from '../../../../assets/icons/more.svg?react';
 import ViewIcon from '../../../../assets/icons/view.svg?react';
 import PencilIcon from '../../../../assets/icons/pencil.svg?react';
 import BinIcon from '../../../../assets/icons/bin.svg?react';
 import CheckIcon from '../../../../assets/icons/check3.svg?react';
+import { useElementsWithLookups } from '../../../../hooks/useElementsWithLookups';
 
 const DELETE_ELEMENT_SUCCESS_MESSAGE = 'Element has been deleted successfully';
 const DELETE_ELEMENT_ERROR_MESSAGE = 'Error occured deleting element';
@@ -34,13 +30,8 @@ export const ElementsTable = () => {
 
   const [notification, contextHolder] = useNotification();
 
-  const { data, error, isLoading } = useFetchElementsQuery();
-  const [deleteAlbum, { isLoading: isLoadingDeleteElement }] = useDeleteElementMutation();
-
-  const reformedElements = useMemo(
-    () => data?.data.content?.map((el: any) => ({ ...el, status: <Status value={el.status} /> })),
-    [data?.data.content],
-  );
+  const { isLoading, elements, error, total } = useElementsWithLookups();
+  const [deleteElement, { isLoading: isLoadingDeleteElement }] = useDeleteElementMutation();
 
   const handleOpenSuccessModal = useCallback(
     () => setIsSuccessModalOpen(true),
@@ -57,7 +48,7 @@ export const ElementsTable = () => {
   );
   const handleDeleteElement = useCallback(async () => {
     if (elementId) {
-      const result: any = await deleteAlbum(elementId);
+      const result: any = await deleteElement(elementId);
 
       if (result.error) {
         return notification.error({
@@ -75,7 +66,7 @@ export const ElementsTable = () => {
   const elementTableColumns: TableProps<Element>['columns'] = [
     { title: 'Name', key: uuid(), dataIndex: 'name' },
     { title: 'Element Category', key: uuid(), dataIndex: 'categoryValue' },
-    { title: 'Element Classification', key: uuid(), dataIndex: 'classificationValueId' },
+    { title: 'Element Classification', key: uuid(), dataIndex: 'classificationValue' },
     { title: 'Status', key: uuid(), dataIndex: 'status' },
     { title: 'Date & Time Modified', key: uuid(), dataIndex: 'createdAt' },
     { title: 'Modified By', key: uuid(), dataIndex: 'modifiedBy' },
@@ -125,8 +116,8 @@ export const ElementsTable = () => {
 
   const JSX = (
     <div>
-      {data?.data && data.data.total > 0 ? (
-        <Table columns={elementTableColumns} dataSource={reformedElements || []} />
+      {total && total > 0 ? (
+        <Table columns={elementTableColumns} dataSource={elements} />
       ) : (
         <div
           style={{
