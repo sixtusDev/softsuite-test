@@ -18,7 +18,6 @@ export function withAsyncState<T extends { id?: string }>(
   ErrorComponent: React.ComponentType<FallbackProps> = DefaultErrorComponent,
 ): React.FC<T> {
   const WithAsyncState = () => {
-    console.log({ isLoading });
     if (isLoading) {
       return <LoadingComponent />;
     }

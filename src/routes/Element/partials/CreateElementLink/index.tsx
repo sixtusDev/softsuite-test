@@ -159,12 +159,10 @@ export const CreateElementLink = ({
     [isSuccessModalOpen],
   );
   const handleSubmit = useCallback(async () => {
-    console.log('man', { formValues });
     const { employeeCategoryId, employeeCategoryValueId } = JSON.parse(
       formValues.step1.employeeCategoryId,
     );
     const { employeeTypeId, employeeTypeValueId } = JSON.parse(formValues.step1.employeeTypeId);
-    console.log(formValues.step3);
     const combinedFormValues = {
       ...formValues.step1,
       ...formValues.step2,
@@ -214,10 +212,8 @@ export const CreateElementLink = ({
           break;
       }
       if (currentStep < MAX_STEP) {
-        console.log('Hi');
         setCurrentStep(currentStep + 1);
       } else {
-        console.log('Hello');
         handleSubmit();
       }
     });
