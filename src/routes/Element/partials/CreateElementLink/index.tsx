@@ -49,7 +49,6 @@ export const CreateElementLink = ({
   const [formValues, setFormValues] = useState<{ [key: string]: any }>({
     step1: {},
     step2: {},
-    step3: {},
   });
   const [form] = Form.useForm();
 
@@ -163,12 +162,14 @@ export const CreateElementLink = ({
       formValues.step1.employeeCategoryId,
     );
     const { employeeTypeId, employeeTypeValueId } = JSON.parse(formValues.step1.employeeTypeId);
+    const step3FormValues = form.getFieldsValue();
+
     const combinedFormValues = {
       ...formValues.step1,
       ...formValues.step2,
-      ...formValues.step3,
-      effectiveStartDate: new Date(formValues.step3.effectiveStartDate).toISOString(),
-      effectiveEndDate: new Date(formValues.step3.effectiveEndDate).toISOString(),
+      ...step3FormValues,
+      effectiveStartDate: new Date(step3FormValues.effectiveStartDate).toISOString(),
+      effectiveEndDate: new Date(step3FormValues.effectiveEndDate).toISOString(),
       employeeCategoryId,
       employeeCategoryValueId,
       employeeTypeId,
@@ -186,7 +187,7 @@ export const CreateElementLink = ({
     onCloseModal();
     setSuccessModalMessage(result?.data?.message);
     handleOpenSuccessModal();
-  }, [formValues.step1, formValues.step2, formValues.step3]);
+  }, [formValues.step1, formValues.step2]);
 
   const prevStep = useCallback(() => {
     if (currentStep <= INITIAL_STEP) {
@@ -205,9 +206,6 @@ export const CreateElementLink = ({
         case 1:
           setFormValues((prevState) => ({ ...prevState, step2: form.getFieldsValue() }));
           break;
-        case 2:
-          setFormValues((prevState) => ({ ...prevState, step3: form.getFieldsValue() }));
-          break;
         default:
           break;
       }
@@ -217,7 +215,7 @@ export const CreateElementLink = ({
         handleSubmit();
       }
     });
-  }, [currentStep, formValues, setFormValues]);
+  }, [currentStep]);
 
   return (
     <>
